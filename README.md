@@ -1,42 +1,43 @@
-# 台灣個股交易資訊查詢系統
-## Individual Stock Trading Information Inquiry System
+# Individual Stock Trading Information Inquiry System
 
-一個透過 Python 自動查詢台灣證券交易所（TWSE）個股交易資料，並進行視覺化呈現的工具。
+> 🇹🇼 [繁體中文版說明請點此](./README.zh-TW.md)
 
----
-
-## 功能介紹
-
-- 輸入台灣股票代碼，自動開啟瀏覽器並導向 TWSE 查詢頁面
-- 透過 TWSE Open API 取得當月每日交易資料
-- 將資料整理為結構化的 Pandas DataFrame
-- 繪製**收盤價趨勢圖**
-- 以樣式化表格呈現資料：
-  - 收盤價套用藍色漸層背景
-  - 漲跌價差正值標紅、負值標綠
+A Python-based tool that queries daily stock trading data from the Taiwan Stock Exchange (TWSE) and presents it with charts and styled tables.
 
 ---
 
-## 使用技術
+## Features
 
-| 類別 | 套件 |
-|------|------|
-| 網頁自動化 | `selenium`, `webdriver` (Firefox) |
-| HTTP 請求 | `requests` |
-| 資料處理 | `pandas`, `numpy`, `json` |
-| 資料視覺化 | `matplotlib` |
-| 其他 | `time` |
+- Enter a Taiwan stock ticker to automatically open TWSE in Firefox
+- Fetch current-month daily trading data via the TWSE Open API
+- Parse and clean the response into a structured Pandas DataFrame
+- Plot a **closing price trend chart**
+- Render a styled table with:
+  - Blue gradient background on closing price column
+  - Red for positive price changes, green for negative
 
 ---
 
-## 環境需求
+## Tech Stack
+
+| Category | Libraries |
+|----------|-----------|
+| Browser Automation | `selenium`, Firefox WebDriver |
+| HTTP Request | `requests` |
+| Data Processing | `pandas`, `numpy`, `json` |
+| Visualization | `matplotlib` |
+| Utilities | `time` |
+
+---
+
+## Requirements
 
 - Python 3.x
-- Firefox 瀏覽器
-- [GeckoDriver](https://github.com/mozilla/geckodriver/releases)（需加入系統 PATH）
-- 中文字型：`Taipei Sans TC Beta`（用於 Matplotlib 中文顯示）
+- Firefox browser
+- [GeckoDriver](https://github.com/mozilla/geckodriver/releases) (must be in system PATH)
+- Chinese font: `Taipei Sans TC Beta` (for Matplotlib CJK rendering)
 
-### 安裝相依套件
+### Install dependencies
 
 ```bash
 pip install selenium requests pandas numpy matplotlib
@@ -44,74 +45,80 @@ pip install selenium requests pandas numpy matplotlib
 
 ---
 
-## 使用方式
+## Usage
 
-### 方式一：執行 Python 腳本
+### Option 1 — Python script
 
 ```bash
 python "[Code] Individual-Stock-Trading-Information-Inquiry-System.py"
 ```
 
-### 方式二：使用 Jupyter Notebook
+### Option 2 — Jupyter Notebook
 
-開啟 `[Code] Individual-Stock-Trading-Information-Inquiry-System.ipynb`，逐格執行。
+Open `[Code] Individual-Stock-Trading-Information-Inquiry-System.ipynb` and run cells interactively.
 
-### 操作流程
+### Steps
 
-1. 執行程式後，輸入台灣股票代碼（例如：`2330` 代表台積電）
-2. 程式自動開啟 Firefox 並前往 TWSE 查詢頁面
-3. 同時透過 TWSE API 取得當月每日交易資料
-4. 輸出收盤價趨勢圖與格式化資料表
+1. Run the program and enter a Taiwan stock code (e.g. `2330` for TSMC)
+2. Firefox opens and navigates to the TWSE query page
+3. The TWSE API is called simultaneously to fetch this month's daily data
+4. A closing price chart and a formatted data table are displayed
 
 ---
 
-## 資料來源
+## Data Source
 
-台灣證券交易所（TWSE）Open API：
+Taiwan Stock Exchange (TWSE) Open API:
 
 ```
-https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date={YYYYMMDD}&stockNo={股票代碼}
+https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date={YYYYMMDD}&stockNo={ticker}
 ```
 
 ---
 
-## 資料欄位說明
+## Data Fields
 
-TWSE 回傳資料包含以下欄位：
-
-| 欄位 | 說明 |
-|------|------|
-| 日期 | 交易日期 |
-| 成交股數 | 當日成交總股數 |
-| 成交金額 | 當日成交總金額 |
-| 開盤價 | 當日開盤價格 |
-| 最高價 | 當日最高價格 |
-| 最低價 | 當日最低價格 |
-| 收盤價 | 當日收盤價格 |
-| 漲跌價差 | 與前日收盤價之差值 |
-| 成交筆數 | 當日成交筆數 |
+| Field (Chinese) | Description |
+|-----------------|-------------|
+| 日期 | Trading date |
+| 成交股數 | Total shares traded |
+| 成交金額 | Total trading value (NTD) |
+| 開盤價 | Opening price |
+| 最高價 | Daily high |
+| 最低價 | Daily low |
+| 收盤價 | Closing price |
+| 漲跌價差 | Price change vs. previous close |
+| 成交筆數 | Number of transactions |
 
 ---
 
-## 檔案結構
+## File Structure
 
 ```
 Individual-Stock-Trading-Information-Inquiry-System/
-├── README.md
-├── [Code] Individual-Stock-Trading-Information-Inquiry-System.py   # Python 腳本版本
-└── [Code] Individual-Stock-Trading-Information-Inquiry-System.ipynb # Jupyter Notebook 版本
+├── README.md                                                          # English (this file)
+├── README.zh-TW.md                                                    # Traditional Chinese
+├── [Code] Individual-Stock-Trading-Information-Inquiry-System.py      # Python script
+└── [Code] Individual-Stock-Trading-Information-Inquiry-System.ipynb   # Jupyter Notebook
 ```
 
 ---
 
-## 注意事項
+## Notes
 
-- 本系統查詢的是**當月**交易資料，資料範圍依 TWSE API 回傳為準
-- 需確保 GeckoDriver 版本與已安裝的 Firefox 版本相容
-- 若 Matplotlib 無法正確顯示中文，請確認系統已安裝 `Taipei Sans TC Beta` 字型，或修改 `plt.rcParams['font.sans-serif']` 為其他已安裝的中文字型（如 `['Microsoft JhengHei']`、`['PingFang TC']`）
+- Data coverage is limited to the **current month** as returned by the TWSE API
+- Ensure GeckoDriver version is compatible with your installed Firefox version
+- If Chinese characters do not render correctly in Matplotlib, replace the font setting in the code:
+  ```python
+  # Change this line:
+  plt.rcParams['font.sans-serif'] = ['Taipei Sans TC Beta']
+  # To an available CJK font, e.g.:
+  plt.rcParams['font.sans-serif'] = ['Microsoft JhengHei']   # Windows
+  plt.rcParams['font.sans-serif'] = ['PingFang TC']           # macOS
+  ```
 
 ---
 
-## 授權
+## License
 
-本專案僅供學習與個人使用。資料來源版權歸台灣證券交易所所有。
+This project is for educational and personal use only. Stock data is provided by the Taiwan Stock Exchange and remains their property.
